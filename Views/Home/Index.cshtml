@@ -1,0 +1,44 @@
+﻿@model GeneratingQRCode.Models.QRCodeModel
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@if (!string.IsNullOrEmpty(ViewBag.ErrorDownload as string))
+{
+    <script type="text/javascript">
+        alert("@ViewBag.ErrorDownload")
+    </script>
+}
+
+
+<div class="row justify-content-md-center mb-5">
+    <div class="col-md-4">
+        <form method="post">
+            @Html.AntiForgeryToken()
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="QrText" class="control-label"></label>
+                <input asp-for="QrText" class="form-control" />
+                <span asp-validation-for="QrText" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary btn-block" />
+            </div>
+        </form>
+        @if (ViewBag.QrCodeImage != null)
+        {
+            <div class="form-group">
+                <img src="@ViewBag.QrCodeImage" class="img-thumbnail" style="width:300px; height:300px; object-fit:cover;" />
+            </div>
+
+            @Html.ActionLink("Download", "GenerateFiles", new { fileName = ViewBag.QrcodeName })
+        }
+
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
