@@ -18,5 +18,10 @@
   <ItemGroup>
     <Folder Include="wwwroot\Images\" />
   </ItemGroup>
+  
+  <PropertyGroup>
+  <EnvironmentName>Development</EnvironmentName>
+  </PropertyGroup>
+
 
 </Project>
