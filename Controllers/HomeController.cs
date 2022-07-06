@@ -62,7 +62,7 @@ namespace QrCodeGenerator.Controllers
                 foreach(FileInfo file in fileInfo)
                 {
                     TimeSpan ts = DateTime.Now - Convert.ToDateTime(file.CreationTime);
-                    if(ts.Minutes > 60)
+                    if(ts.Minutes > 59 || ts.Days > 0 || ts.Hours > 0)
                     {
                         file.Delete();
                     }
@@ -93,6 +93,8 @@ namespace QrCodeGenerator.Controllers
 
                 Image img = Image.FromStream(ms);
                 img.Save(pathFile, ImageFormat.Png);
+
+                img.Dispose();
 
                 return ms.ToArray();
             }
